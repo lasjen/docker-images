@@ -5,12 +5,16 @@ Sample Docker build files to facilitate installation, configuration, and environ
 ## How to build and run
 This project offers sample Dockerfiles for both Oracle Database 12c (12.1.0.2) Enterprise Edition and Standard Edition as well as Oracle Database 11g Express Edition. To assist in building the images, you can use the [buildDockerImage.sh](dockerfiles/buildDockerImage.sh) script. See below for instructions and usage.
 
-The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
+The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters. In addition - the use of the `buildDockerImage.sh` script will reduce the size of the generated images.
 
 ### Building Oracle Database Docker Install Images
-**IMPORTANT:** You will have to provide the installation binaries of Oracle Database and put them into the `dockerfiles/<version>` folder. You only need to provide the binaries for the edition you are going to install. You also have to make sure to have internet connectivity for yum. Note that you must not uncompress the binaries. The script will handle that for you and fail if you uncompress them manually!
+**IMPORTANT:** You will have to provide the installation binaries of Oracle Database and put them into the `dockerfiles/<version>` folder, or the `docker-images/OracleDatabase/install_files` folder when using the `buildDockerimage.sh` script. You only need to provide the binaries for the edition you are going to install. You also have to make sure to have internet connectivity for yum. Note that you must not uncompress the binaries. The script will handle that for you and fail if you uncompress them manually!
 
-Before you build the image make sure that you have provided the installation binaries and put them into the right folder. Once you have chosen which edition and version you want to build an image of, go into the **dockerfiles** folder and run the **buildDockerImage.sh** script as root or with `sudo` privileges:
+Before you build the image make sure that you have:
+- provided the installation binaries and put them into the right folder. 
+- When using the `buildDockerimage.sh` script: found the IP address for your host machine (ifconfig -a) 
+
+Once you have chosen which edition and version you want to build an image of, go into the **dockerfiles** folder and run the **buildDockerImage.sh** script as root or with `sudo` privileges:
 
 	[oracle@localhost dockerfiles]$ ./buildDockerImage.sh -h
 
@@ -24,6 +28,8 @@ Before you build the image make sure that you have provided the installation bin
 	   -s: creates image based on 'Standard Edition 2'
 	   -x: creates image based on 'Express Edition'
 	   -i: ignores the MD5 checksums
+           -V: To generate oradata volume
+           -I: Set IP address to host machine
 	
 	* select one edition only: -e, -s, or -x
 
